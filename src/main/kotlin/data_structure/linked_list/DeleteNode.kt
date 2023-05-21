@@ -3,13 +3,12 @@ package data_structure.linked_list
 import java.util.*
 
 /*
- * Complete the 'insertNodeAtPosition' function below.
+ * Complete the 'deleteNode' function below.
  *
  * The function is expected to return an INTEGER_SINGLY_LINKED_LIST.
  * The function accepts following parameters:
  *  1. INTEGER_SINGLY_LINKED_LIST list
- *  2. INTEGER data
- *  3. INTEGER position
+ *  2. INTEGER position
  */
 
 /*
@@ -22,25 +21,18 @@ import java.util.*
  *
  */
 
-fun insertNodeAtPosition(list: SinglyLinkedListNode?, data: Int, position: Int): SinglyLinkedListNode? {
-    // Write your code here
+fun deleteNode(list: SinglyLinkedListNode?, position: Int): SinglyLinkedListNode? {
     var newPosition = position
-
+    // Write your code here
     if (newPosition == 0) {
-        val node = SinglyLinkedListNode(data)
-        node.next = list
-        return node
+        return list?.next
     }
 
     var current: SinglyLinkedListNode? = list
-
     while (newPosition-- > 1) {
         current = current?.next
     }
-
-    val node = SinglyLinkedListNode(data)
-    node.next = current?.next
-    current?.next = node
+    current?.next = current?.next?.next
 
     return list
 }
@@ -56,11 +48,9 @@ fun main() {
         list.insertNode(listItem)
     }
 
-    val data = scan.nextLine().trim().toInt()
-
     val position = scan.nextLine().trim().toInt()
 
-    val listHead = insertNodeAtPosition(list.head, data, position)
+    val deletedList = deleteNode(list.head, position)
 
-    printSinglyLinkedList(listHead, " ")
+    printSinglyLinkedList(deletedList, " ")
 }
