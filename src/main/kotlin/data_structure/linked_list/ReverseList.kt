@@ -3,12 +3,6 @@ package data_structure.linked_list
 import java.util.*
 
 /*
- * Complete the 'reversePrint' function below.
- *
- * The function accepts INTEGER_SINGLY_LINKED_LIST list as parameter.
- */
-
-/*
  * For your reference:
  *
  * SinglyLinkedListNode {
@@ -17,18 +11,44 @@ import java.util.*
  * }
  *
  */
-
-fun reversePrint(list: SinglyLinkedListNode?) {
-    // Write your code here
-    if (list != null) {
-        if(list.next != null) {
-            reversePrint(list.next)
-        }
-
-        println(list.data)
+private fun reverseRecursive(head: SinglyLinkedListNode?): SinglyLinkedListNode? {
+    // Base case
+    if (head?.next == null) {
+        return head
     }
+
+    // Get current llist data
+    val curr = SinglyLinkedListNode(head.data)
+
+    // Recurse through the list until base case (new head of reversed)
+    val new = reverseRecursive(head.next)
+
+    // Set pointer to go through new reversed linked list
+    var tail = new
+    while (tail?.next != null) {
+        tail = tail.next
+    }
+
+    // Set tail of the linked list to the current value
+    tail?.next = curr
+
+    // Return head of reversed linked list
+    return new
 }
 
+/*
+Sample Input
+1
+5
+1
+2
+3
+4
+5
+Sample Output
+
+5 4 3 2 1
+ */
 fun main() {
     val scan = Scanner(System.`in`)
 
@@ -43,6 +63,6 @@ fun main() {
             list.insertNode(listItem)
         }
 
-        reversePrint(list.head)
+        printSinglyLinkedList(reverseRecursive(list.head), " ")
     }
 }
